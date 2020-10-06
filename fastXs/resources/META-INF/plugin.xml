@@ -1,5 +1,5 @@
 <idea-plugin>
-  <id>com.your.company.unique.plugin.id</id>
+  <id>com.fast.fastXs.tools</id>
   <name>fastXs_tools</name>
   <version>1.0</version>
   <vendor email="minghua52@163.com" url="https://blog.csdn.net/fffff525257">FastXs</vendor>

@@ -39,7 +39,7 @@ public class MvvpAdapter extends BaseGenerateAction {
      */
     private String name;
 
-    public String pkg = "com.fastxs.simple";
+    public String pkg = "com.fast.fastxs.mvvm";
     private String kongge = "   ";
     private String targetSuffix = ".java";
     private String viewSuffix = "View";
@@ -224,10 +224,10 @@ public class MvvpAdapter extends BaseGenerateAction {
         PsiFile ModelFile = mMvvmDir.createFile(className + targetSuffix);
         StringBuffer modelText = new StringBuffer();
         modelText.append("package " + getFilePackageName(mMvvmDir.getVirtualFile()) + ";\n\n");
-        modelText.append("import " + pkg + ".BaseModel;\n\n");
+        modelText.append("import " + pkg + ".XsBaseModel;\n\n");
 
         modelText.append(getHeaderAnnotation() + "\n");
-        modelText.append("public class " + className + " extends BaseModel {\n\n");
+        modelText.append("public class " + className + " extends XsBaseModel {\n\n");
         modelText.append(kongge + "public " + className + "(){\n");
         modelText.append(kongge + "}\n\n");
         modelText.append("}");
@@ -238,11 +238,11 @@ public class MvvpAdapter extends BaseGenerateAction {
         PsiFile viewIFile = mMvvmDir.createFile(className + targetSuffix);
         StringBuffer modelText = new StringBuffer();
         modelText.append("package " + getFilePackageName(mMvvmDir.getVirtualFile()) + ";\n\n");
-        modelText.append("import " + pkg + ".BaseView" + ";\n");
+        modelText.append("import " + pkg + ".XsBaseViewRender" + ";\n");
         modelText.append("import android.content.Context;\n\n");
 
         modelText.append(getHeaderAnnotation() + "\n");
-        modelText.append("public class " + className + " extends BaseView {\n\n");
+        modelText.append("public class " + className + " extends XsBaseViewRender {\n\n");
 
 
         modelText.append(kongge + "public " + className + "(Context context) {\n");
@@ -264,10 +264,10 @@ public class MvvpAdapter extends BaseGenerateAction {
         //生成要写入的字符串
         StringBuffer modelText = new StringBuffer();
         modelText.append("package " + getFilePackageName(mMvvmDir.getVirtualFile()) + ";\n\n");
-        modelText.append("import " + pkg + ".BaseModelView" + ";\n\n");
+        modelText.append("import " + pkg + ".XsBaseModelView" + ";\n\n");
 
         modelText.append(getHeaderAnnotation() + "\n");
-        modelText.append("public class " + className + " extends BaseModelView<" + modelName + "," + viewIName + "> {\n\n");
+        modelText.append("public class " + className + " extends XsBaseModelView<" + modelName + "," + viewIName + "> {\n\n");
 
 
         modelText.append(kongge + "public " + className + "(" + modelName + " baseModel" + "," + viewIName + " baseView" + ") {\n");
