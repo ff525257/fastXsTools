@@ -1,5 +1,6 @@
-package com.fmh.tools;
+package com.fmh.tools.utils;
 
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -54,5 +55,20 @@ public class FileUtils {
     public static String stringFirstToLowerCase(String str){
         String lowCaseStr=str.toLowerCase();
         return lowCaseStr.substring(0,1)+str.substring(1,str.length());
+    }
+
+    public static String getFilePackageName(VirtualFile dir) {
+        if (!dir.isDirectory()) {
+            dir = dir.getParent();
+        }
+        String path = dir.getPath().replace("/", ".");
+        String preText = "src";
+        if (path.contains("src.main.java")) {
+            preText = "src.main.java";
+        }
+
+        int preIndex = path.indexOf(preText) + preText.length() + 1;
+        path = path.substring(preIndex);
+        return path;
     }
 }
