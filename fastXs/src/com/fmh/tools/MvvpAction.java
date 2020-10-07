@@ -85,14 +85,12 @@ public class MvvpAction extends BaseGenerateAction {
 
         initName(prefixName);
 
-        mMvvmDir = createMvvpDir();
-        creatMvvmFile();
-
-        writeCureentFile(project);
+        runWriteCommandAction(project);
     }
 
     /**
      * 初始化名称
+     *
      * @param prefix
      */
     private void initName(String prefix) {
@@ -103,34 +101,41 @@ public class MvvpAction extends BaseGenerateAction {
         parentClassName = parentClassImport.substring(parentClassImport.lastIndexOf(".") + 1, parentClassImport.length());
     }
 
-
     /**
-     * 修改当前文件
+     * 写文件操作,请在此方法
      *
      * @param project
      */
-    private void writeCureentFile(@NotNull Project project) {
+    private void runWriteCommandAction(@NotNull Project project) {
 
         WriteCommandAction.runWriteCommandAction(project, new Runnable() {
             @Override
             public void run() {
-                //添加单个
-                ClassUtils.addImport(project, mOpenClass, mFactory, parentClassImport, true);
-                ClassUtils.addImport(project, mOpenClass, mFactory, FileUtils.getFilePackageName(mMvvmDir.getVirtualFile()), false);
 
-                //继承
-                PsiClass parentClass = mFactory.createClass(parentClassName);
-                mOpenClass.getExtendsList().add(mFactory.createClassReferenceElement(parentClass));
+                mMvvmDir = createMvvpDir();
+                creatMvvmFile();
 
-                //添加泛型
-                PsiClass view = mFactory.createClass(mModelViewName);
-                mOpenClass.getExtendsList().getReferenceElements()[0].getParameterList().add(mFactory.createClassReferenceElement(view));
-
-                //添加方法
-                mOpenClass.add(mFactory.createMethodFromText("@Override  public " + mModelViewName + " initModelView() {return  new " + mModelViewName + "(new " + mModelName + "(),new " + mViewName + "(this))  ;}", mOpenClass));
+                writeCurrentClass(project);
 
             }
         });
+    }
+
+    private void writeCurrentClass(@NotNull Project project) {
+        //添加单个
+        ClassUtils.addImport(project, mOpenClass, mFactory, parentClassImport, true);
+        ClassUtils.addImport(project, mOpenClass, mFactory, FileUtils.getFilePackageName(mMvvmDir.getVirtualFile()), false);
+
+        //继承
+        PsiClass parentClass = mFactory.createClass(parentClassName);
+        mOpenClass.getExtendsList().add(mFactory.createClassReferenceElement(parentClass));
+
+        //添加泛型
+        PsiClass view = mFactory.createClass(mModelViewName);
+        mOpenClass.getExtendsList().getReferenceElements()[0].getParameterList().add(mFactory.createClassReferenceElement(view));
+
+        //添加方法
+        mOpenClass.add(mFactory.createMethodFromText("@Override  public " + mModelViewName + " initModelView() {return  new " + mModelViewName + "(new " + mModelName + "(),new " + mViewName + "(this))  ;}", mOpenClass));
     }
 
     /**

@@ -68,15 +68,15 @@ public class AutoAdapterAction extends BaseGenerateAction {
             prefixName = mOpenClassName;
         }
 
-        writeCurrentrFile(project);
+        runWriteCommandAction(project);
     }
 
     /**
-     * 修改当前文件
+     * 写文件操作,请在此方法
      *
      * @param project
      */
-    private void writeCurrentrFile(@NotNull Project project) {
+    private void runWriteCommandAction(@NotNull Project project) {
 
         WriteCommandAction.runWriteCommandAction(project, new Runnable() {
             @Override
