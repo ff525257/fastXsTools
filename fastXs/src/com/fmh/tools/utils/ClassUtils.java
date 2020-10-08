@@ -17,6 +17,7 @@ import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.search.EverythingGlobalScope;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.ui.awt.RelativePoint;
+import com.thoughtworks.xstream.core.util.Fields;
 import org.jetbrains.annotations.NonNls;
 
 public class ClassUtils {
@@ -104,7 +105,18 @@ public class ClassUtils {
             importList.add(elementFactory.createImportStatementOnDemand(fullyQualifiedName));
         }
 
+    }
 
+    public static void addField(PsiClass classZ, PsiElementFactory elementFactory, String fieldText, String name) {
+        PsiField[] fs = classZ.getFields();
+        if (fs != null) {
+            for (int i = 0; i < fs.length; i++) {
+                if (fs[i].getName().equals(name)) {
+                    return;
+                }
+            }
+        }
+        classZ.add(elementFactory.createFieldFromText(fieldText, classZ));
     }
 
 

@@ -177,7 +177,7 @@ public class InjectAction extends BaseGenerateAction implements IConfirmListener
             injection.append(element.fieldName);
             injection.append(";");
 
-            mOpenClass.add(mFactory.createFieldFromText(injection.toString(), mOpenClass));
+            ClassUtils.addField(mOpenClass, mFactory, injection.toString(), element.fieldName);
         }
     }
 
