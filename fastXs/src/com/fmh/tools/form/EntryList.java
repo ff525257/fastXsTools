@@ -1,5 +1,7 @@
 package com.fmh.tools.form;
 
+import com.fmh.tools.config.Config;
+import com.fmh.tools.config.KeyConfig;
 import com.fmh.tools.iface.ICancelListener;
 import com.fmh.tools.iface.IConfirmListener;
 import com.fmh.tools.iface.OnCheckBoxStateChangedListener;
@@ -35,6 +37,7 @@ public class EntryList extends JPanel {
     protected JButton mConfirm;
     protected JButton mCancel;
     protected EntryHeader mEntryHeader;
+    protected InputTextView mInjectClass;
 
     private OnCheckBoxStateChangedListener allCheckListener = new OnCheckBoxStateChangedListener() {
         @Override
@@ -78,7 +81,13 @@ public class EntryList extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         addInjections();
+        addInjectionClass();
         addButtons();
+    }
+
+    private void addInjectionClass() {
+        mInjectClass = new InputTextView("Inject class", Config.getData(KeyConfig.KEY_INJECTCLASS,Config.INJECT_CLASS_PATH));
+        add(mInjectClass);
     }
 
     protected void addInjections() {
@@ -159,30 +168,16 @@ public class EntryList extends JPanel {
         holderPanel.add(Box.createHorizontalGlue());
         add(holderPanel, BorderLayout.PAGE_END);*/
 
-        /*msplitOnclickMethodsCheck = new JCheckBox();
-        msplitOnclickMethodsCheck.setPreferredSize(new Dimension(32, 26));
-        msplitOnclickMethodsCheck.setSelected(false);
-
-        final JLabel independentOnclickMethodsLabel = new JLabel();
-        independentOnclickMethodsLabel.setText("Split OnClick methods");
-
-        final JPanel splitOnclickMethodsPanel = new JPanel();
-        splitOnclickMethodsPanel.setLayout(new BoxLayout(splitOnclickMethodsPanel, BoxLayout.LINE_AXIS));
-        splitOnclickMethodsPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
-        splitOnclickMethodsPanel.add(msplitOnclickMethodsCheck);
-        splitOnclickMethodsPanel.add(independentOnclickMethodsLabel);
-        splitOnclickMethodsPanel.add(Box.createHorizontalGlue());
-        add(splitOnclickMethodsPanel, BorderLayout.PAGE_END);*/
 
         mCancel = new JButton();
         mCancel.setAction(new CancelAction());
-        mCancel.setPreferredSize(new Dimension(120, 26));
+        mCancel.setPreferredSize(new Dimension(100, 36));
         mCancel.setText("Cancel");
         mCancel.setVisible(true);
 
         mConfirm = new JButton();
         mConfirm.setAction(new ConfirmAction());
-        mConfirm.setPreferredSize(new Dimension(120, 26));
+        mConfirm.setPreferredSize(new Dimension(100, 36));
         mConfirm.setText("Confirm");
         mConfirm.setVisible(true);
 
@@ -253,8 +248,10 @@ public class EntryList extends JPanel {
             for (Entry entry : mEntries) {
                 entry.syncElement();
             }
+            valid = mInjectClass.syncAndCheck();
 
             if (valid) {
+                Config.saveData(KeyConfig.KEY_INJECTCLASS, mInjectClass.getText());
                 if (mConfirmListener != null) {
                     mConfirmListener.onConfirm(mProject, mEditor, mElements, mPrefix, mCreateHolder, false);
                 }

@@ -15,6 +15,7 @@ public class EntryHeader extends JPanel {
     protected JLabel mEvent;
     protected JLabel mName;
     protected OnCheckBoxStateChangedListener mAllListener;
+    private int itemHeight = 26;
 
     public void setAllListener(final OnCheckBoxStateChangedListener onStateChangedListener) {
         this.mAllListener = onStateChangedListener;
@@ -22,16 +23,16 @@ public class EntryHeader extends JPanel {
 
     public EntryHeader() {
         mAllCheck = new JCheckBox();
-        mAllCheck.setPreferredSize(new Dimension(40, 26));
+        mAllCheck.setPreferredSize(new Dimension(40, itemHeight));
         mAllCheck.setSelected(false);
         mAllCheck.addItemListener(new AllCheckListener());
 
         mType = new JLabel("Element");
-        mType.setPreferredSize(new Dimension(100, 26));
+        mType.setPreferredSize(new Dimension(100, itemHeight));
         mType.setFont(new Font(mType.getFont().getFontName(), Font.BOLD, mType.getFont().getSize()));
 
         mID = new JLabel("ID");
-        mID.setPreferredSize(new Dimension(100, 26));
+        mID.setPreferredSize(new Dimension(100, itemHeight));
         mID.setFont(new Font(mID.getFont().getFontName(), Font.BOLD, mID.getFont().getSize()));
 
        /* mEvent = new JLabel("OnClick");
@@ -43,15 +44,15 @@ public class EntryHeader extends JPanel {
         mName.setFont(new Font(mName.getFont().getFontName(), Font.BOLD, mName.getFont().getSize()));
 
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-        add(Box.createRigidArea(new Dimension(1, 0)));
+        add(Box.createRigidArea(new Dimension(10, 0)));
         add(mAllCheck);
-        add(Box.createRigidArea(new Dimension(11, 0)));
+        add(Box.createRigidArea(new Dimension(10, 0)));
         add(mType);
-        add(Box.createRigidArea(new Dimension(12, 0)));
+        add(Box.createRigidArea(new Dimension(10, 0)));
         add(mID);
        /* add(Box.createRigidArea(new Dimension(12, 0)));
         add(mEvent);*/
-        add(Box.createRigidArea(new Dimension(22, 0)));
+        add(Box.createRigidArea(new Dimension(10, 0)));
         add(mName);
         add(Box.createHorizontalGlue());
     }

@@ -21,10 +21,11 @@ public class Entry extends JPanel {
     protected JCheckBox mCheck;
     protected JLabel mType;
     protected JLabel mID;
-//    protected JCheckBox mEvent;
+    //    protected JCheckBox mEvent;
     protected JTextField mName;
     protected Color mNameDefaultColor;
-    protected Color mNameErrorColor = new Color(0x880000);
+    protected Color mNameErrorColor = new Color(0xFFDB5860);
+    private int itemHeight = 26;
 
     public JCheckBox getCheck() {
         return mCheck;
@@ -52,14 +53,14 @@ public class Entry extends JPanel {
         mEvent.setPreferredSize(new Dimension(100, 26));*/
 
         mType = new JLabel(mElement.name);
-        mType.setPreferredSize(new Dimension(100, 26));
+        mType.setPreferredSize(new Dimension(100, itemHeight));
 
         mID = new JLabel(mElement.id);
-        mID.setPreferredSize(new Dimension(100, 26));
+        mID.setPreferredSize(new Dimension(100, itemHeight));
 
         mName = new JTextField(mElement.fieldName, 10);
         mNameDefaultColor = mName.getBackground();
-        mName.setPreferredSize(new Dimension(100, 26));
+        mName.setPreferredSize(new Dimension(100, itemHeight));
         mName.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -74,6 +75,8 @@ public class Entry extends JPanel {
 
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         setMaximumSize(new Dimension(Short.MAX_VALUE, 54));
+        //添加空隙
+        add(Box.createRigidArea(new Dimension(10, 0)));
         add(mCheck);
         add(Box.createRigidArea(new Dimension(10, 0)));
         add(mType);

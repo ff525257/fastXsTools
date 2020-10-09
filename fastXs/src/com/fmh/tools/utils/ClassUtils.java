@@ -22,10 +22,22 @@ import org.jetbrains.annotations.NonNls;
 
 public class ClassUtils {
 
+    /**
+     * Dialog形式的报错
+     *
+     * @param msg
+     */
     public static void showErr(String msg) {
         Messages.showMessageDialog(msg, "Warn", Messages.getInformationIcon());
     }
 
+    /**
+     * Popup形式的提示框
+     *
+     * @param project
+     * @param htmlText
+     * @param messageType
+     */
     public static void showBalloonPopup(Project project, String htmlText, MessageType messageType) {
         StatusBar statusBar = WindowManager.getInstance().getStatusBar(project);
 
@@ -36,6 +48,12 @@ public class ClassUtils {
                 .show(RelativePoint.getCenterOf(statusBar.getComponent()), Balloon.Position.atRight);
     }
 
+    /**
+     * 获取选中的字符串
+     *
+     * @param editor
+     * @return
+     */
     public static String getSelectText(Editor editor) {
         final SelectionModel selectionModel = editor.getSelectionModel();
 
@@ -107,6 +125,14 @@ public class ClassUtils {
 
     }
 
+    /**
+     * 添加字段
+     *
+     * @param classZ
+     * @param elementFactory
+     * @param fieldText
+     * @param name
+     */
     public static void addField(PsiClass classZ, PsiElementFactory elementFactory, String fieldText, String name) {
         PsiField[] fs = classZ.getFields();
         if (fs != null) {

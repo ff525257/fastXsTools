@@ -1,5 +1,7 @@
 package com.fmh.tools;
 
+import com.fmh.tools.config.Config;
+import com.fmh.tools.config.KeyConfig;
 import com.fmh.tools.form.EntryList;
 import com.fmh.tools.iface.ICancelListener;
 import com.fmh.tools.iface.IConfirmListener;
@@ -12,6 +14,7 @@ import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.MessageType;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiUtilBase;
 import org.jetbrains.annotations.NotNull;
@@ -32,6 +35,7 @@ public class InjectAction extends BaseGenerateAction implements IConfirmListener
      */
     private PsiClass mOpenClass;
     private PsiElementFactory mFactory;
+    private String prefix = "";
 
     protected static final Logger log = Logger.getInstance(InjectAction.class);
 
@@ -68,27 +72,39 @@ public class InjectAction extends BaseGenerateAction implements IConfirmListener
             files = ClassUtils.findFilesByFileName(project, selectStr + ".xml");
         }
 
-        PsiFile[] AndroidManifests = ClassUtils.findFilesByFileName(project, "AndroidManifest.xml");
-        if (AndroidManifests != null && AndroidManifests.length > 0) {
+        PsiFile[] androidManifests = ClassUtils.findFilesByFileName(project, AndroidManifestAnalyze.FILENAME);
+        if (androidManifests != null && androidManifests.length > 0) {
             AndroidManifestAnalyze a = new AndroidManifestAnalyze();
-            a.xmlHandle(AndroidManifests[0].getVirtualFile().getPath());
+
+            String realPath = null;
+            for (int i = 0; i < androidManifests.length; i++) {
+                if (androidManifests[i].getVirtualFile().getPath().contains("src/main")) {
+                    realPath = androidManifests[i].getVirtualFile().getPath();
+                    break;
+                }
+            }
+            //to test
+            if (realPath == null) {
+                realPath = androidManifests[0].getVirtualFile().getPath();
+            }
+            a.xmlHandle(realPath);
             pkg = a.appPackage;
         }
 
         PsiFile layout = files[0];
 
         if (layout == null) {
-            Utils.showErrorNotification(project, "No layout found");
+            ClassUtils.showBalloonPopup(project, "No layout found", MessageType.ERROR);
             return; // no layout found
         }
 
         log.info("Layout file: " + layout.getVirtualFile());
 
-        ArrayList<Element> elements = Utils.getIDsFromLayout(layout);
+        ArrayList<Element> elements = Utils.getIDsFromLayout(layout, prefix);
         if (!elements.isEmpty()) {
             showDialog(project, editor, elements);
         } else {
-            Utils.showErrorNotification(project, "No IDs found in layout");
+            ClassUtils.showBalloonPopup(project, "No IDs found in layout", MessageType.WARNING);
         }
     }
 
@@ -105,7 +121,7 @@ public class InjectAction extends BaseGenerateAction implements IConfirmListener
             //new InjectWriter(file, getTargetClass(editor, file), "Generate Injections", elements, layout.getName(), fieldNamePrefix, createHolder, splitOnclickMethods).execute();
             runWriteCommandAction(project, elements);
         } else { // just notify user about no element selected
-            Utils.showInfoNotification(project, "No injection was selected");
+            ClassUtils.showBalloonPopup(project, "No injection was selected", MessageType.WARNING);
         }
 
     }
@@ -121,12 +137,11 @@ public class InjectAction extends BaseGenerateAction implements IConfirmListener
 
             @Override
             public void run() {
-                ClassUtils.addImport(project, mOpenClass, mFactory, "com.fast.fastxs.inject.ViewId", true);
+                ClassUtils.addImport(project, mOpenClass, mFactory, Config.getData(KeyConfig.KEY_INJECTCLASS, Config.INJECT_CLASS_PATH), true);
 
                 if (pkg != null) {
                     ClassUtils.addImport(project, mOpenClass, mFactory, pkg + ".R", true);
                 }
-
 
                 generateFields(elements);
                 loadimport(elements, project);
@@ -214,6 +229,7 @@ public class InjectAction extends BaseGenerateAction implements IConfirmListener
         EntryList panel = new EntryList(project, editor, elements, ids, false, this, this);
 
         mDialog = new JFrame();
+        mDialog.setTitle("Inject");
         mDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         mDialog.getRootPane().setDefaultButton(panel.getConfirmButton());
         mDialog.getContentPane().add(panel);

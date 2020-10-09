@@ -9,7 +9,10 @@ public class Element {
     private static final Pattern sIdPattern = Pattern.compile("@\\+?(android:)?id/([^$]+)$", Pattern.CASE_INSENSITIVE);
     private static final Pattern sValidityPattern = Pattern.compile("^([a-zA-Z_\\$][\\w\\$]*)$", Pattern.CASE_INSENSITIVE);
     public String id;
-    public boolean isAndroidNS = false;
+    /**
+     * 判断是否是系统ID比如android.R.id.ok
+     */
+    public boolean isAndroidID = false;
     public String nameFull; // element name with package
     public String name; // element name
     public String fieldName; // name of variable
@@ -17,14 +20,14 @@ public class Element {
     public boolean used = true;
     public boolean isClick = true;
 
-    public Element(String name, String id) {
+    public Element(String name, String id, String prefix) {
         // id
         final Matcher matcher = sIdPattern.matcher(id);
         if (matcher.find() && matcher.groupCount() > 0) {
             this.id = matcher.group(2);
 
             String androidNS = matcher.group(1);
-            this.isAndroidNS = !(androidNS == null || androidNS.length() == 0);
+            this.isAndroidID = !(androidNS == null || androidNS.length() == 0);
         }
 
         // name
@@ -37,7 +40,7 @@ public class Element {
             this.name = name;
         }
 
-        this.fieldName = getFieldName();
+        this.fieldName = getFieldName(prefix);
     }
 
     /**
@@ -49,7 +52,7 @@ public class Element {
         StringBuilder fullID = new StringBuilder();
         String rPrefix;
 
-        if (isAndroidNS) {
+        if (isAndroidID) {
             rPrefix = "android.R.id.";
         } else {
             rPrefix = "R.id.";
@@ -66,15 +69,15 @@ public class Element {
      *
      * @return
      */
-    private String getFieldName() {
+    private String getFieldName(String prefix) {
         String[] words = this.id.split("_");
         StringBuilder sb = new StringBuilder();
-        sb.append(Utils.getPrefix());
+        sb.append(prefix);
 
         for (int i = 0; i < words.length; i++) {
             String[] idTokens = words[i].split("\\.");
             char[] chars = idTokens[idTokens.length - 1].toCharArray();
-            if (i > 0 || !Utils.isEmptyString(Utils.getPrefix())) {
+            if (i > 0 || !Utils.isEmptyString(prefix)) {
                 chars[0] = Character.toUpperCase(chars[0]);
             }
 

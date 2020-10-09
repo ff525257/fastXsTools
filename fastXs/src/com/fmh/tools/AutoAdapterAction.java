@@ -1,5 +1,6 @@
 package com.fmh.tools;
 
+import com.fmh.tools.config.Config;
 import com.fmh.tools.config.KeyConfig;
 import com.fmh.tools.utils.ClassUtils;
 import com.intellij.codeInsight.CodeInsightActionHandler;
@@ -91,7 +92,7 @@ public class AutoAdapterAction extends BaseGenerateAction {
                 ClassUtils.addImport(project, mOpenClass, mFactory, "java.util.ArrayList", true);
 
                 //继承
-                PsiClass layoutModelAdapterClass = mFactory.createClass(KeyConfig.KEY_LAYOUTMODELADAPTER);
+                PsiClass layoutModelAdapterClass = mFactory.createClass(Config.ADAPTER_CLASSNAME);
                 mOpenClass.getExtendsList().add(mFactory.createClassReferenceElement(layoutModelAdapterClass));
 
 
@@ -102,10 +103,10 @@ public class AutoAdapterAction extends BaseGenerateAction {
                 //自定义Item
                 PsiClass itemClass = mFactory.createClass(itemName);
                 //自定义Item的继承class
-                PsiClass basePresenter = mFactory.createClass(KeyConfig.KEY_BASEITEM);
+                PsiClass basePresenter = mFactory.createClass(Config.BASEITEM);
                 itemClass.getExtendsList().add(mFactory.createClassReferenceElement(basePresenter));
 
-                PsiClass GeneralListObjClass = mFactory.createClass(KeyConfig.KEY_GENERALLISTOBJ);
+                PsiClass GeneralListObjClass = mFactory.createClass(Config.GENERALLISTOBJ);
                 //为itemClass添加泛型
                 itemClass.getExtendsList().getReferenceElements()[0].getParameterList().add(mFactory.createClassReferenceElement(GeneralListObjClass));
 

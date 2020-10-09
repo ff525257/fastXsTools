@@ -1,9 +1,6 @@
 package com.fmh.tools.utils;
 
-import com.fmh.tools.Settings;
-import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
@@ -15,8 +12,6 @@ import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.wm.StatusBar;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.*;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
-import com.intellij.psi.codeStyle.CodeStyleSettingsManager;
 import com.intellij.psi.search.EverythingGlobalScope;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -129,10 +124,10 @@ public class Utils {
      * @param file
      * @return
      */
-    public static ArrayList<Element> getIDsFromLayout(final PsiFile file) {
+    public static ArrayList<Element> getIDsFromLayout(final PsiFile file, String prefix) {
         final ArrayList<Element> elements = new ArrayList<Element>();
 
-        return getIDsFromLayout(file, elements);
+        return getIDsFromLayout(file, elements, prefix);
     }
 
     /**
@@ -141,7 +136,7 @@ public class Utils {
      * @param file
      * @return
      */
-    public static ArrayList<Element> getIDsFromLayout(final PsiFile file, final ArrayList<Element> elements) {
+    public static ArrayList<Element> getIDsFromLayout(final PsiFile file, final ArrayList<Element> elements, final String prefix) {
         file.accept(new XmlRecursiveElementVisitor() {
 
             @Override
@@ -159,7 +154,7 @@ public class Utils {
                             PsiFile include = findLayoutResource(file, project, getLayoutName(layout.getValue()));
 
                             if (include != null) {
-                                getIDsFromLayout(include, elements);
+                                getIDsFromLayout(include, elements, prefix);
 
                                 return;
                             }
@@ -184,7 +179,7 @@ public class Utils {
                     }
 
                     try {
-                        elements.add(new Element(name, value));
+                        elements.add(new Element(name, value, prefix));
                     } catch (IllegalArgumentException e) {
                         // TODO log
                     }
@@ -214,61 +209,7 @@ public class Utils {
         return parts[1];
     }
 
-    /**
-     * Display simple notification - information
-     *
-     * @param project
-     * @param text
-     */
-    public static void showInfoNotification(Project project, String text) {
-        showNotification(project, MessageType.INFO, text);
-    }
 
-    /**
-     * Display simple notification - error
-     *
-     * @param project
-     * @param text
-     */
-    public static void showErrorNotification(Project project, String text) {
-        showNotification(project, MessageType.ERROR, text);
-    }
-
-    /**
-     * Display simple notification of given type
-     *
-     * @param project
-     * @param type
-     * @param text
-     */
-    public static void showNotification(Project project, MessageType type, String text) {
-        StatusBar statusBar = WindowManager.getInstance().getStatusBar(project);
-
-        JBPopupFactory.getInstance()
-                .createHtmlTextBalloonBuilder(text, type, null)
-                .setFadeoutTime(7500)
-                .createBalloon()
-                .show(RelativePoint.getCenterOf(statusBar.getComponent()), Balloon.Position.atRight);
-    }
-
-    /**
-     * Load field name prefix from code style
-     *
-     * @return
-     */
-    public static String getPrefix() {
-        if (PropertiesComponent.getInstance().isValueSet(Settings.PREFIX)) {
-            return PropertiesComponent.getInstance().getValue(Settings.PREFIX);
-        } else {
-            CodeStyleSettingsManager manager = CodeStyleSettingsManager.getInstance();
-            CodeStyleSettings settings = manager.getCurrentSettings();
-            return settings.FIELD_NAME_PREFIX;
-        }
-    }
-
-    public static String getViewHolderClassName() {
-        return PropertiesComponent.getInstance().getValue(Settings.VIEWHOLDER_CLASS_NAME, "ViewHolder");
-    }
 
     private static final Pattern mFieldAnnotationPattern = Pattern.compile("^@" + "ViewId" + "\\(([^\\)]+)\\)$", Pattern.CASE_INSENSITIVE);
 
@@ -285,14 +226,13 @@ public class Utils {
             return id;
         }
 
-       Matcher matcher = mFieldAnnotationPattern.matcher(annotation);
+        Matcher matcher = mFieldAnnotationPattern.matcher(annotation);
         if (matcher.find()) {
             id = matcher.group(1);
         }
 
         return id;
     }
-
 
 
     public static int getInjectCount(ArrayList<Element> elements) {
@@ -361,7 +301,7 @@ public class Utils {
 
     /**
      * Capitalizes a String changing the first character to upper case. No other characters are changed.
-
+     *
      * @param src the String to capitalize, may be null
      * @return the capitalized String, {@code null} if src is null
      * @since 1.6.0

@@ -14,22 +14,35 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * 解析AndroidManifest.xml
+ */
 public class AndroidManifestAnalyze {
 
     public String appPackage;
     private List<String> permissions = new ArrayList();
     private List<String> activities = new ArrayList();
 
+    public static final String FILENAME = "AndroidManifest.xml";
+
+    public static final String PACKAGE = "package";
+    public static final String CATEGORY = "category";
+    public static final String ANDROIDNAME = "android:name";
+    public static final String USESPERMISSION = "uses-permission";
+    public static final String CATEGORYLAUNCHER = "android.intent.category.LAUNCHER";
+    private static final String ACTIVITY = "activity";
+
     /**
      * 解析包名
+     *
      * @param doc
      * @return
      */
-    public  String findPackage(Document doc){
+    public String findPackage(Document doc) {
         Node node = doc.getFirstChild();
-        NamedNodeMap attrs  =node.getAttributes();
-        for(int i = 0; i < attrs.getLength(); i++){
-            if(attrs.item(i).getNodeName() == "package"){
+        NamedNodeMap attrs = node.getAttributes();
+        for (int i = 0; i < attrs.getLength(); i++) {
+            if (PACKAGE.equals(attrs.item(i).getNodeName())) {
                 return attrs.item(i).getNodeValue();
             }
         }
@@ -38,29 +51,30 @@ public class AndroidManifestAnalyze {
 
     /**
      * 解析入口activity
+     *
      * @param doc
      * @return
      */
-    public  String findLaucherActivity(Document doc){
+    public String findLaucherActivity(Document doc) {
         Node activity = null;
         String sTem = "";
-        NodeList categoryList = doc.getElementsByTagName("category");
-        for(int i = 0; i < categoryList.getLength(); i++){
+        NodeList categoryList = doc.getElementsByTagName(CATEGORY);
+        for (int i = 0; i < categoryList.getLength(); i++) {
             Node category = categoryList.item(i);
-            NamedNodeMap attrs  =category.getAttributes();
-            for(int j = 0; j < attrs.getLength(); j++){
-                if(attrs.item(j).getNodeName() == "android:name"){
-                    if(attrs.item(j).getNodeValue().equals("android.intent.category.LAUNCHER")){
+            NamedNodeMap attrs = category.getAttributes();
+            for (int j = 0; j < attrs.getLength(); j++) {
+                if (ANDROIDNAME.equals(attrs.item(j).getNodeName())) {
+                    if (attrs.item(j).getNodeValue().equals(CATEGORYLAUNCHER)) {
                         activity = category.getParentNode().getParentNode();
                         break;
                     }
                 }
             }
         }
-        if(activity != null){
-            NamedNodeMap attrs  =activity.getAttributes();
-            for(int j = 0; j < attrs.getLength(); j++){
-                if(attrs.item(j).getNodeName() == "android:name"){
+        if (activity != null) {
+            NamedNodeMap attrs = activity.getAttributes();
+            for (int j = 0; j < attrs.getLength(); j++) {
+                if (ANDROIDNAME.equals(attrs.item(j).getNodeName())) {
                     sTem = attrs.item(j).getNodeValue();
                 }
             }
@@ -70,9 +84,10 @@ public class AndroidManifestAnalyze {
 
     /**
      * 解析入口
+     *
      * @param filePath
      */
-    public  void xmlHandle(String filePath){
+    public void xmlHandle(String filePath) {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
             // 创建DocumentBuilder对象
@@ -80,8 +95,8 @@ public class AndroidManifestAnalyze {
 
             //加载xml文件
             Document document = db.parse(filePath);
-            NodeList permissionList = document.getElementsByTagName("uses-permission");
-            NodeList activityAll = document.getElementsByTagName("activity");
+            NodeList permissionList = document.getElementsByTagName(USESPERMISSION);
+            NodeList activityAll = document.getElementsByTagName(ACTIVITY);
 
             //获取权限列表
             for (int i = 0; i < permissionList.getLength(); i++) {
@@ -91,52 +106,34 @@ public class AndroidManifestAnalyze {
 
             //获取activity列表
             appPackage = (findPackage(document));
-            for(int i = 0; i < activityAll.getLength(); i++){
+            for (int i = 0; i < activityAll.getLength(); i++) {
                 Node activity = activityAll.item(i);
-                NamedNodeMap attrs  =activity.getAttributes();
-                for(int j = 0; j < attrs.getLength(); j++){
-                    if(attrs.item(j).getNodeName() == "android:name"){
+                NamedNodeMap attrs = activity.getAttributes();
+                for (int j = 0; j < attrs.getLength(); j++) {
+                    if (ANDROIDNAME.equals(attrs.item(j).getNodeName())) {
                         String sTem = attrs.item(j).getNodeValue();
-                        if(sTem.startsWith(".")){
-                            sTem = appPackage+sTem;
+                        if (sTem.startsWith(".")) {
+                            sTem = appPackage + sTem;
                         }
                         activities.add(sTem);
                     }
                 }
             }
             String s = findLaucherActivity(document);
-            if(s.startsWith(".")){
-                s = appPackage+s;
+            if (s.startsWith(".")) {
+                s = appPackage + s;
             }
             //移动入口类至首位
             activities.remove(s);
             activities.add(0, s);
         } catch (ParserConfigurationException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (SAXException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-    public static void output(AndroidManifestAnalyze a){
-        System.out.println("packageName:"+a.appPackage);
-        System.out.println("permissions("+a.permissions.size()+"):");
-        for(int i = 0; i < a.permissions.size(); i++){
-            System.out.println(a.permissions.get(i));
-        }
 
-        System.out.println("activities("+a.activities.size()+"):");
-        for(int i = 0; i < a.activities.size(); i++){
-            System.out.println(a.activities.get(i));
-        }
-    }
-    public static void main(String[] args){
-        AndroidManifestAnalyze a = new AndroidManifestAnalyze();
-        a.xmlHandle("E:\\AppREData\\csdn\\csdnRE\\AndroidManifest.xml");
-        output(a);
-    }
+
 }

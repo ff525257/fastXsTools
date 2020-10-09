@@ -11,6 +11,7 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.MessageType;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiUtilBase;
 import org.jetbrains.annotations.NotNull;
@@ -79,7 +80,7 @@ public class MvvpAction extends BaseGenerateAction {
             prefixName = mOpenClassName.substring(0, mOpenClassName.indexOf(KeyConfig.KEY_FRAGMENT));
             parentClassImport = "com.fast.fastxs.XsBaseFragment";
         } else {
-            ClassUtils.showErr("Only supports suffixes Acitivity and Fragment");
+            ClassUtils.showBalloonPopup(project, "Only supports suffixes Acitivity and Fragment", MessageType.ERROR);
             return;
         }
 
