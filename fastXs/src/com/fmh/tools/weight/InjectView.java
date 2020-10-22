@@ -1,6 +1,6 @@
-package com.fmh.tools.form;
+package com.fmh.tools.weight;
 
-import com.fmh.tools.iface.OnCheckBoxStateChangedListener;
+import com.fmh.tools.callback.OnCheckBoxStateChangedListener;
 import com.fmh.tools.utils.Element;
 
 import javax.swing.*;
@@ -11,9 +11,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
-public class Entry extends JPanel {
+public class InjectView extends JPanel {
 
-    protected EntryList mParent;
+    protected InjectDialog mParent;
     protected Element mElement;
     protected ArrayList<String> mGeneratedIDs;
     protected OnCheckBoxStateChangedListener mListener;
@@ -35,13 +35,13 @@ public class Entry extends JPanel {
         this.mListener = onStateChangedListener;
     }
 
-    public Entry(EntryList parent, Element element, ArrayList<String> ids) {
+    public InjectView(InjectDialog parent, Element element, ArrayList<String> ids) {
         mElement = element;
         mParent = parent;
         mGeneratedIDs = ids;
 
         mCheck = new JCheckBox();
-        mCheck.setPreferredSize(new Dimension(40, 26));
+        mCheck.setPreferredSize(new Dimension(40, itemHeight));
         if (!mGeneratedIDs.contains(element.getFullID())) {
             mCheck.setSelected(mElement.used);
         } else {

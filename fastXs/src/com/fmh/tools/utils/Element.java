@@ -13,12 +13,12 @@ public class Element {
      * 判断是否是系统ID比如android.R.id.ok
      */
     public boolean isAndroidID = false;
+
     public String nameFull; // element name with package
     public String name; // element name
     public String fieldName; // name of variable
     public boolean isValid = false;
     public boolean used = true;
-    public boolean isClick = true;
 
     public Element(String name, String id, String prefix) {
         // id

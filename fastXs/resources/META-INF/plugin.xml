@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>fastXstools</id>
     <name>fastXs_tools</name>
-    <version>1.1</version>
+    <version>1.0.2</version>
     <vendor email="minghua52@163.com" url="https://blog.csdn.net/fffff525257">FastXs</vendor>
 
     <description><![CDATA[
@@ -37,14 +37,14 @@
         <action id="Adatper_F" class="com.fmh.tools.AutoAdapterAction" text="Adatper" description="Adatper">
             <add-to-group group-id="GenerateGroup" anchor="first"/>
         </action>
-        <action id="Mvvm" class="com.fmh.tools.MvvpAction" text="Mvvm" description="Mvvm">
+        <action id="Mvvm" class="com.fmh.tools.MvvmAction" text="Mvvm" description="Mvvm">
             <add-to-group group-id="GenerateGroup" anchor="first"/>
         </action>
 
         <action id="InjectAction"
                 class="com.fmh.tools.InjectAction"
-                text="ViewId"
-                description="ViewId">
+                text="Inject tools"
+                description="Inject tools">
             <add-to-group group-id="GenerateGroup"/>
         </action>
 

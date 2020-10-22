@@ -1,4 +1,4 @@
-package com.fmh.tools.form;
+package com.fmh.tools.weight;
 
 import javax.swing.*;
 import java.awt.*;

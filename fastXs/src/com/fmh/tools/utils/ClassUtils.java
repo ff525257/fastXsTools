@@ -17,7 +17,6 @@ import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.search.EverythingGlobalScope;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.ui.awt.RelativePoint;
-import com.thoughtworks.xstream.core.util.Fields;
 import org.jetbrains.annotations.NonNls;
 
 public class ClassUtils {

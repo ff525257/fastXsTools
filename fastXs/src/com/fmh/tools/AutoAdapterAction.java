@@ -14,6 +14,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.util.PsiUtilBase;
 import org.jetbrains.annotations.NotNull;
 
+
 /**
  * Adapter自动适配器
  * 只支持LayoutModelAdapter
@@ -49,9 +50,10 @@ public class AutoAdapterAction extends BaseGenerateAction {
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getData(PlatformDataKeys.PROJECT);
         Editor editor = event.getData(PlatformDataKeys.EDITOR);
-
         actionPerformedImpl(project, editor);
+
     }
+
 
     @Override
     public void actionPerformedImpl(@NotNull Project project, Editor editor) {

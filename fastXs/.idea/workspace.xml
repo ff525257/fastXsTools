@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -20,18 +23,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54b16aba-16fd-4406-971d-e4779cadc815" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/META-INF/plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/resources/META-INF/plugin.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/AutoAdapterAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/AutoAdapterAction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/InjectAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/InjectAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/MvvpAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/MvvpAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/Settings.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/config/KeyConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/config/KeyConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/form/Entry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/form/Entry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/form/EntryHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/form/EntryHeader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/form/EntryList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/form/EntryList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/utils/AndroidManifestAnalyze.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/utils/AndroidManifestAnalyze.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/MvvpAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/MvvmAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/form/Entry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/weight/InjectView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/form/EntryHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/weight/EntryHeaderLayout.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/form/EntryList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/weight/InjectDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/form/InputTextView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/weight/InputTextView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/iface/ICancelListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/callback/CancelListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/iface/IConfirmListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/callback/ConfirmListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/iface/OnCheckBoxStateChangedListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/callback/OnCheckBoxStateChangedListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/utils/ClassUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/utils/ClassUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/utils/Element.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/utils/Element.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/fmh/tools/utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fmh/tools/utils/Utils.java" afterDir="false" />
@@ -82,6 +85,7 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
@@ -135,6 +139,8 @@
       <workItem from="1602143201250" duration="209000" />
       <workItem from="1602143428045" duration="2758000" />
       <workItem from="1602146444719" duration="35000" />
+      <workItem from="1602725462656" duration="618000" />
+      <workItem from="1603346910037" duration="1241000" />
     </task>
     <servers />
   </component>
@@ -151,64 +157,73 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602143615746">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1602143615746" />
+    <state x="129" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1602235117667">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="129" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1602235117667" />
     <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1602145265270">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1602145265270" />
-    <state width="1877" height="198" key="GridCell.Tab.0.bottom" timestamp="1602228123050">
+    <state x="703" y="372" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1603347911471">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="198" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1602228123050" />
-    <state width="1877" height="198" key="GridCell.Tab.0.center" timestamp="1602228123050">
+    <state x="703" y="372" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040@0.0.1920.1040" timestamp="1603347911471" />
+    <state width="1877" height="198" key="GridCell.Tab.0.bottom" timestamp="1602238874607">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="198" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1602228123050" />
-    <state width="1877" height="198" key="GridCell.Tab.0.left" timestamp="1602228123050">
+    <state width="1877" height="198" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1602238874607" />
+    <state width="1877" height="198" key="GridCell.Tab.0.center" timestamp="1602238874607">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="198" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1602228123050" />
-    <state width="1877" height="198" key="GridCell.Tab.0.right" timestamp="1602228123050">
+    <state width="1877" height="198" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1602238874607" />
+    <state width="1877" height="198" key="GridCell.Tab.0.left" timestamp="1602238874607">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="198" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1602228123050" />
-    <state width="1877" height="198" key="GridCell.Tab.1.bottom" timestamp="1602228123051">
+    <state width="1877" height="198" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1602238874607" />
+    <state width="1877" height="198" key="GridCell.Tab.0.right" timestamp="1602238874607">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="198" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1602228123051" />
-    <state width="1877" height="198" key="GridCell.Tab.1.center" timestamp="1602228123050">
+    <state width="1877" height="198" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1602238874607" />
+    <state width="1877" height="198" key="GridCell.Tab.1.bottom" timestamp="1602238874607">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="198" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1602228123050" />
-    <state width="1877" height="198" key="GridCell.Tab.1.left" timestamp="1602228123050">
+    <state width="1877" height="198" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1602238874607" />
+    <state width="1877" height="198" key="GridCell.Tab.1.center" timestamp="1602238874607">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="198" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1602228123050" />
-    <state width="1877" height="198" key="GridCell.Tab.1.right" timestamp="1602228123050">
+    <state width="1877" height="198" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1602238874607" />
+    <state width="1877" height="198" key="GridCell.Tab.1.left" timestamp="1602238874607">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="198" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1602228123050" />
-    <state width="1877" height="290" key="GridCell.Tab.2.bottom" timestamp="1602146035827">
+    <state width="1877" height="198" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1602238874607" />
+    <state width="1877" height="198" key="GridCell.Tab.1.right" timestamp="1602238874607">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="290" key="GridCell.Tab.2.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1602146035827" />
-    <state width="1877" height="290" key="GridCell.Tab.2.center" timestamp="1602146035827">
+    <state width="1877" height="198" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1602238874607" />
+    <state width="1877" height="290" key="GridCell.Tab.2.bottom" timestamp="1602236624306">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="290" key="GridCell.Tab.2.center/0.0.1920.1040@0.0.1920.1040" timestamp="1602146035827" />
-    <state width="1877" height="290" key="GridCell.Tab.2.left" timestamp="1602146035827">
+    <state width="1877" height="290" key="GridCell.Tab.2.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1602236624306" />
+    <state width="1877" height="290" key="GridCell.Tab.2.center" timestamp="1602236624306">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="290" key="GridCell.Tab.2.left/0.0.1920.1040@0.0.1920.1040" timestamp="1602146035827" />
-    <state width="1877" height="290" key="GridCell.Tab.2.right" timestamp="1602146035827">
+    <state width="1877" height="290" key="GridCell.Tab.2.center/0.0.1920.1040@0.0.1920.1040" timestamp="1602236624306" />
+    <state width="1877" height="290" key="GridCell.Tab.2.left" timestamp="1602236624306">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="290" key="GridCell.Tab.2.right/0.0.1920.1040@0.0.1920.1040" timestamp="1602146035827" />
+    <state width="1877" height="290" key="GridCell.Tab.2.left/0.0.1920.1040@0.0.1920.1040" timestamp="1602236624306" />
+    <state width="1877" height="290" key="GridCell.Tab.2.right" timestamp="1602236624306">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="290" key="GridCell.Tab.2.right/0.0.1920.1040@0.0.1920.1040" timestamp="1602236624306" />
     <state x="440" y="94" key="SettingsEditor" timestamp="1602143633466">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -217,10 +232,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="681" y="261" width="564" height="524" key="StructurePopup/0.0.1920.1040@0.0.1920.1040" timestamp="1602227684146" />
-    <state x="661" y="118" width="598" height="804" key="find.popup" timestamp="1602227717774">
+    <state x="661" y="118" width="598" height="804" key="find.popup" timestamp="1603347834610">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="661" y="118" width="598" height="804" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1602227717774" />
+    <state x="661" y="118" width="598" height="804" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1603347834610" />
     <state x="334" y="116" key="new project wizard" timestamp="1602146470473">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -237,11 +252,6 @@
           <url>file://$PROJECT_DIR$/src/com/fmh/tools/PasteAction.java</url>
           <line>39</line>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/fmh/tools/InjectAction.java</url>
-          <line>68</line>
-          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

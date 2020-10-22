@@ -1,10 +1,11 @@
-package com.fmh.tools.form;
+package com.fmh.tools.weight;
 
 import com.fmh.tools.config.Config;
 import com.fmh.tools.config.KeyConfig;
-import com.fmh.tools.iface.ICancelListener;
-import com.fmh.tools.iface.IConfirmListener;
-import com.fmh.tools.iface.OnCheckBoxStateChangedListener;
+import com.fmh.tools.i18n.Resource;
+import com.fmh.tools.callback.CancelListener;
+import com.fmh.tools.callback.ConfirmListener;
+import com.fmh.tools.callback.OnCheckBoxStateChangedListener;
 import com.fmh.tools.utils.Element;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
@@ -17,17 +18,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-public class EntryList extends JPanel {
+public class InjectDialog extends JPanel {
 
     protected Project mProject;
     protected Editor mEditor;
     protected ArrayList<Element> mElements = new ArrayList<Element>();
     protected ArrayList<String> mGeneratedIDs = new ArrayList<String>();
-    protected ArrayList<Entry> mEntries = new ArrayList<Entry>();
+    protected ArrayList<InjectView> mEntries = new ArrayList<InjectView>();
     protected boolean mCreateHolder = false;
     protected String mPrefix = null;
-    protected IConfirmListener mConfirmListener;
-    protected ICancelListener mCancelListener;
+    protected ConfirmListener mConfirmListener;
+    protected CancelListener mCancelListener;
     protected JCheckBox mPrefixCheck;
     protected JTextField mPrefixValue;
     protected JLabel mPrefixLabel;
@@ -36,13 +37,13 @@ public class EntryList extends JPanel {
     protected JLabel mHolderLabel;
     protected JButton mConfirm;
     protected JButton mCancel;
-    protected EntryHeader mEntryHeader;
+    protected EntryHeaderLayout mEntryHeader;
     protected InputTextView mInjectClass;
 
     private OnCheckBoxStateChangedListener allCheckListener = new OnCheckBoxStateChangedListener() {
         @Override
         public void changeState(boolean checked) {
-            for (final Entry entry : mEntries) {
+            for (final InjectView entry : mEntries) {
                 entry.setListener(null);
                 entry.getCheck().setSelected(checked);
                 entry.setListener(singleCheckListener);
@@ -54,7 +55,7 @@ public class EntryList extends JPanel {
         @Override
         public void changeState(boolean checked) {
             boolean result = true;
-            for (Entry entry : mEntries) {
+            for (InjectView entry : mEntries) {
                 result &= entry.getCheck().isSelected();
             }
 
@@ -64,7 +65,7 @@ public class EntryList extends JPanel {
         }
     };
 
-    public EntryList(Project project, Editor editor, ArrayList<Element> elements, ArrayList<String> ids, boolean createHolder, IConfirmListener confirmListener, ICancelListener cancelListener) {
+    public InjectDialog(Project project, Editor editor, ArrayList<Element> elements, ArrayList<String> ids, boolean createHolder, ConfirmListener confirmListener, CancelListener cancelListener) {
         mProject = project;
         mEditor = editor;
         mCreateHolder = createHolder;
@@ -86,7 +87,7 @@ public class EntryList extends JPanel {
     }
 
     private void addInjectionClass() {
-        mInjectClass = new InputTextView("Inject class", Config.getData(KeyConfig.KEY_INJECTCLASS,Config.INJECT_CLASS_PATH));
+        mInjectClass = new InputTextView(Resource.getText("inject_class"), Config.getData(KeyConfig.KEY_INJECTCLASS, Config.INJECT_CLASS_PATH));
         add(mInjectClass);
     }
 
@@ -94,7 +95,7 @@ public class EntryList extends JPanel {
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.PAGE_AXIS));
         contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        mEntryHeader = new EntryHeader();
+        mEntryHeader = new EntryHeaderLayout();
         contentPanel.add(mEntryHeader);
         contentPanel.add(Box.createRigidArea(new Dimension(0, 5)));
 
@@ -105,7 +106,7 @@ public class EntryList extends JPanel {
         int cnt = 0;
         boolean selectAllCheck = true;
         for (Element element : mElements) {
-            Entry entry = new Entry(this, element, mGeneratedIDs);
+            InjectView entry = new InjectView(this, element, mGeneratedIDs);
             entry.setListener(singleCheckListener);
 
             if (cnt > 0) {
@@ -172,13 +173,13 @@ public class EntryList extends JPanel {
         mCancel = new JButton();
         mCancel.setAction(new CancelAction());
         mCancel.setPreferredSize(new Dimension(100, 36));
-        mCancel.setText("Cancel");
+        mCancel.setText(Resource.getText("cannle"));
         mCancel.setVisible(true);
 
         mConfirm = new JButton();
         mConfirm.setAction(new ConfirmAction());
         mConfirm.setPreferredSize(new Dimension(100, 36));
-        mConfirm.setText("Confirm");
+        mConfirm.setText(Resource.getText("ok"));
         mConfirm.setVisible(true);
 
         JPanel buttonPanel = new JPanel();
@@ -245,7 +246,7 @@ public class EntryList extends JPanel {
         public void actionPerformed(ActionEvent event) {
             boolean valid = checkValidity();
 
-            for (Entry entry : mEntries) {
+            for (InjectView entry : mEntries) {
                 entry.syncElement();
             }
             valid = mInjectClass.syncAndCheck();

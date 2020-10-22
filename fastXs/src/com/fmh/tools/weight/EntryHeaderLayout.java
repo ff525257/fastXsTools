@@ -1,13 +1,14 @@
-package com.fmh.tools.form;
+package com.fmh.tools.weight;
 
-import com.fmh.tools.iface.OnCheckBoxStateChangedListener;
+import com.fmh.tools.i18n.Resource;
+import com.fmh.tools.callback.OnCheckBoxStateChangedListener;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-public class EntryHeader extends JPanel {
+public class EntryHeaderLayout extends JPanel {
 
     protected JCheckBox mAllCheck;
     protected JLabel mType;
@@ -21,13 +22,13 @@ public class EntryHeader extends JPanel {
         this.mAllListener = onStateChangedListener;
     }
 
-    public EntryHeader() {
+    public EntryHeaderLayout() {
         mAllCheck = new JCheckBox();
         mAllCheck.setPreferredSize(new Dimension(40, itemHeight));
         mAllCheck.setSelected(false);
         mAllCheck.addItemListener(new AllCheckListener());
 
-        mType = new JLabel("Element");
+        mType = new JLabel(Resource.getText("classname"));
         mType.setPreferredSize(new Dimension(100, itemHeight));
         mType.setFont(new Font(mType.getFont().getFontName(), Font.BOLD, mType.getFont().getSize()));
 
@@ -39,7 +40,7 @@ public class EntryHeader extends JPanel {
         mEvent.setPreferredSize(new Dimension(100, 26));
         mEvent.setFont(new Font(mEvent.getFont().getFontName(), Font.BOLD, mEvent.getFont().getSize()));*/
 
-        mName = new JLabel("Variable Name");
+        mName = new JLabel(Resource.getText("variablename"));
         mName.setPreferredSize(new Dimension(100, 26));
         mName.setFont(new Font(mName.getFont().getFontName(), Font.BOLD, mName.getFont().getSize()));
 

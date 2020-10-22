@@ -1,23 +1,19 @@
 package com.fmh.tools.utils;
 
+import com.fmh.tools.config.Config;
+import com.fmh.tools.config.KeyConfig;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.projectRoots.ProjectJdkTable;
 import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.ui.MessageType;
-import com.intellij.openapi.ui.popup.Balloon;
-import com.intellij.openapi.ui.popup.JBPopupFactory;
-import com.intellij.openapi.wm.StatusBar;
-import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.*;
 import com.intellij.psi.search.EverythingGlobalScope;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.ui.awt.RelativePoint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,6 +25,9 @@ import java.util.regex.Pattern;
 public class Utils {
 
     private static final Logger log = Logger.getInstance(Utils.class);
+    public static final String CN = "zh_CN";
+    public static final String EN = "en";
+    public static final String ZH_TW = "zh_TW";
 
     /**
      * Is using Android SDK?
@@ -211,7 +210,7 @@ public class Utils {
 
 
 
-    private static final Pattern mFieldAnnotationPattern = Pattern.compile("^@" + "ViewId" + "\\(([^\\)]+)\\)$", Pattern.CASE_INSENSITIVE);
+
 
     /**
      * Parse ID of injected element (eg. R.id.text)
@@ -220,8 +219,12 @@ public class Utils {
      * @return
      */
     public static String getInjectionID(String annotation) {
-        String id = null;
+        String inject_path = Config.getData(KeyConfig.KEY_INJECTCLASS, Config.INJECT_CLASS_PATH);
+        String inject = inject_path.substring(inject_path.lastIndexOf(".") + 1, inject_path.length());
 
+        Pattern mFieldAnnotationPattern = Pattern.compile("^@" + inject + "\\(([^\\)]+)\\)$", Pattern.CASE_INSENSITIVE);
+
+        String id = null;
         if (isEmptyString(annotation)) {
             return id;
         }
@@ -239,16 +242,6 @@ public class Utils {
         int cnt = 0;
         for (Element element : elements) {
             if (element.used) {
-                cnt++;
-            }
-        }
-        return cnt;
-    }
-
-    public static int getClickCount(ArrayList<Element> elements) {
-        int cnt = 0;
-        for (Element element : elements) {
-            if (element.isClick) {
                 cnt++;
             }
         }
@@ -311,5 +304,23 @@ public class Utils {
             return src;
         }
         return src.substring(0, 1).toUpperCase(Locale.US) + src.substring(1);
+    }
+
+    /**
+     * 语言
+     *
+     * @return
+     */
+    public static boolean isChina() {
+        Locale l = Locale.getDefault();
+
+        if (l != null) {
+            String launguage = l.toString();
+            if (CN.equals(launguage) || ZH_TW.equals(launguage)
+                    || EN.equals(launguage)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
